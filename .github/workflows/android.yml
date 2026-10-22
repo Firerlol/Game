@@ -1,0 +1,42 @@
+
+name: Build Eldoria APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ANDROID_NDK_HOME: ""
+    steps:
+      - name: Get game files
+        uses: actions/checkout@v4
+        with:
+          path: project
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Install Ren'Py and Android tools
+        uses: Ayowel/renpy-setup-action@v3
+        with:
+          action: install
+          install_dir: renpy
+          dlc: rapt
+          android_sdk: true
+
+      - name: Check game scripts
+        uses: Ayowel/renpy-setup-action@v3
+        with:
+          action: lint
+          install_dir: renpy
+          game: project
+
+      - name: Save check report
+        if: always()
+        run: echo "Ren'Py script check finished. See the job log above."
+        
