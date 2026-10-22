@@ -14,13 +14,16 @@ init python:
 
     def move_hero_to(x, y):
         # Ограничиваем движение пределами карты.
-        x = max(0.06, min(0.94, x))
-        y = max(0.25, min(0.92, y))
+        def move_hero_to_mouse():
+        # Получаем координаты именно в момент касания.
+        x, y = renpy.get_mouse_pos()
+
+        x = max(0.06, min(0.94, x / config.screen_width))
+        y = max(0.25, min(0.92, y / config.screen_height))
 
         renpy.store.hero_x = x
         renpy.store.hero_y = y
 
-        # Проверяем близость к важным местам.
         if abs(x - 0.50) < 0.12 and abs(y - 0.42) < 0.12:
             renpy.store.village_message = "Главная площадь Ривена"
         elif abs(x - 0.20) < 0.12 and abs(y - 0.55) < 0.12:
