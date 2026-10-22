@@ -4,11 +4,16 @@ name: Build Eldoria APK
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+env:
+  ANDROID_NDK_HOME: ""
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      ANDROID_NDK_HOME: ""
+
     steps:
       - name: Get game files
         uses: actions/checkout@v4
@@ -36,7 +41,20 @@ jobs:
           install_dir: renpy
           game: project
 
-      - name: Save check report
-        if: always()
-        run: echo "Ren'Py script check finished. See the job log above."
-        
+      - name: Build Android APK
+        uses: Ayowel/renpy-setup-action@v3
+        with:
+          action: android_build
+          install_dir: renpy
+          build_type: apk
+          game: project
+          out_dir: target
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Eldoria-APK
+          path: target/*.apk
+          if-no-files-found: error
+          retention-days: 7
+          
