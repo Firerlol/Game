@@ -77,13 +77,33 @@ screen riven_village():
             add Solid("#347443") xpos 17 ypos 0 xsize 36 ysize 35
             add Solid("#42894b") xpos 23 ypos 7 xsize 18 ysize 17
 
+
     # Дома
     use pixel_house(0.06, 0.25, "#ad7650")
     use pixel_house(0.68, 0.25, "#92704e")
     use pixel_house(0.12, 0.62, "#9c5945")
     use pixel_house(0.69, 0.64, "#b18454")
 
-        # Жители деревни
+    # Интерактивные зоны домов
+    textbutton "Дом старосты":
+        xpos 0.04
+        ypos 0.34
+        text_size 18
+        action Call("village_elder")
+
+    textbutton "Лавка":
+        xpos 0.69
+        ypos 0.34
+        text_size 18
+        action Call("village_merchant")
+
+    textbutton "Кузница":
+        xpos 0.11
+        ypos 0.72
+        text_size 18
+        action Call("village_blacksmith")
+
+    # Жители деревни
     textbutton "Староста":
         xpos 0.30
         ypos 0.43
@@ -98,7 +118,7 @@ screen riven_village():
 
     textbutton "Кузнец":
         xpos 0.12
-        ypos 0.78
+        ypos 0.82
         text_size 22
         action Call("village_blacksmith")
 
@@ -119,15 +139,6 @@ screen riven_village():
         padding (10, 7)
 
         text "[village_message]" color "#ffffff" size 18
-
-    # Обработка нажатия
-    button:
-        xpos 0
-        ypos 0.15
-        xsize 1.0
-        ysize 0.85
-        background None
-        action Function(move_hero_to_mouse)
 
     # Герой
     fixed:
