@@ -1,0 +1,10 @@
+
+{
+  "name": "Эльдория",
+  "icon_name": "Эльдория",
+  "package": "com.firerlol.eldoria",
+  "heap_size": "3",
+  "orientation": "sensor",
+  "update_always": true,
+  "store": "none"
+}
