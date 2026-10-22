@@ -83,7 +83,26 @@ screen riven_village():
     use pixel_house(0.12, 0.62, "#9c5945")
     use pixel_house(0.69, 0.64, "#b18454")
 
-    # Название локации
+        # Жители деревни
+    textbutton "Староста":
+        xpos 0.30
+        ypos 0.43
+        text_size 22
+        action Call("village_elder")
+
+    textbutton "Торговец":
+        xpos 0.67
+        ypos 0.43
+        text_size 22
+        action Call("village_merchant")
+
+    textbutton "Кузнец":
+        xpos 0.12
+        ypos 0.78
+        text_size 22
+        action Call("village_blacksmith")
+
+# Название локации
     frame:
         xpos 0.02
         ypos 0.02
