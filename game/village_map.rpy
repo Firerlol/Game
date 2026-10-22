@@ -125,18 +125,14 @@ screen riven_village():
 
         text "[village_message]" color "#ffffff" size 18
 
-    # Область касания: нажатие перемещает героя.
+    # Нажатие на карту перемещает персонажа.
     button:
         xpos 0
         ypos 0.15
         xsize 1.0
         ysize 0.85
         background None
-        action Function(
-            move_hero_to,
-            renpy.get_mouse_pos()[0] / config.screen_width,
-            renpy.get_mouse_pos()[1] / config.screen_height
-        )
+        action Function(move_hero_to_mouse)
 
     # Герой — временный пиксельный силуэт.
     fixed:
