@@ -26,6 +26,18 @@ jobs:
           distribution: temurin
           java-version: "21"
 
+      - name: Create temporary signing key
+        run: |
+          keytool -genkeypair \
+            -keystore "$GITHUB_WORKSPACE/android.keystore" \
+            -storepass android \
+            -keypass android \
+            -alias android \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Eldoria"
+
       - name: Install Ren'Py and Android tools
         uses: Ayowel/renpy-setup-action@v3
         with:
@@ -33,6 +45,11 @@ jobs:
           install_dir: renpy
           dlc: rapt
           android_sdk: true
+          android_properties: |
+            key.alias=android
+            key.store.password=android
+            key.alias.password=android
+            key.store=${{ github.workspace }}/android.keystore
 
       - name: Check game scripts
         uses: Ayowel/renpy-setup-action@v3
