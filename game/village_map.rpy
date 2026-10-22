@@ -1,21 +1,14 @@
 # ==========================================
 # ЭЛЬДОРИЯ — ДЕРЕВНЯ РИВЕН
-# Прототип пиксельной карты с управлением
-# касанием по экрану
 # ==========================================
 
 default hero_x = 0.50
 default hero_y = 0.72
-
 default village_message = "Деревня Ривен"
-default village_message_timer = 0
 
 init python:
 
-    def move_hero_to(x, y):
-        # Ограничиваем движение пределами карты.
-        def move_hero_to_mouse():
-        # Получаем координаты именно в момент касания.
+    def move_hero_to_mouse():
         x, y = renpy.get_mouse_pos()
 
         x = max(0.06, min(0.94, x / config.screen_width))
@@ -33,10 +26,7 @@ init python:
         else:
             renpy.store.village_message = "Деревня Ривен"
 
-        renpy.restart_interaction()
 
-
-# Пиксельный дом из простых прямоугольников.
 screen pixel_house(x, y, house_color="#9b6242"):
 
     fixed:
@@ -45,42 +35,28 @@ screen pixel_house(x, y, house_color="#9b6242"):
         xsize 150
         ysize 125
 
-        # Стены.
         add Solid(house_color) xpos 20 ypos 38 xsize 110 ysize 78
-
-        # Крыша.
         add Solid("#59352e") xpos 5 ypos 20 xsize 140 ysize 25
         add Solid("#704034") xpos 15 ypos 10 xsize 120 ysize 15
-
-        # Дверь.
         add Solid("#422a25") xpos 62 ypos 75 xsize 28 ysize 41
-
-        # Окно.
         add Solid("#9dd7dc") xpos 32 ypos 52 xsize 22 ysize 20
         add Solid("#422a25") xpos 41 ypos 52 xsize 4 ysize 20
         add Solid("#422a25") xpos 32 ypos 60 xsize 22 ysize 4
 
 
-# Главная карта деревни.
 screen riven_village():
 
     modal True
     zorder 50
 
-    # Трава.
+    # Трава
     add Solid("#477b45")
 
-    # Земляная дорога.
+    # Дороги
     add Solid("#b99b68") xpos 0 ypos 0.38 xsize 1.0 ysize 0.17
     add Solid("#b99b68") xpos 0.43 ypos 0.25 xsize 0.14 ysize 0.55
 
-    # Камни на дороге.
-    add Solid("#d2b887") xpos 0.10 ypos 0.43 xsize 0.04 ysize 0.018
-    add Solid("#d2b887") xpos 0.28 ypos 0.49 xsize 0.035 ysize 0.018
-    add Solid("#d2b887") xpos 0.62 ypos 0.42 xsize 0.04 ysize 0.018
-    add Solid("#d2b887") xpos 0.82 ypos 0.48 xsize 0.035 ysize 0.018
-
-    # Деревья.
+    # Деревья
     for tree_x, tree_y in [
         (0.05, 0.12),
         (0.25, 0.20),
@@ -101,13 +77,13 @@ screen riven_village():
             add Solid("#347443") xpos 17 ypos 0 xsize 36 ysize 35
             add Solid("#42894b") xpos 23 ypos 7 xsize 18 ysize 17
 
-    # Дома.
+    # Дома
     use pixel_house(0.06, 0.25, "#ad7650")
     use pixel_house(0.68, 0.25, "#92704e")
     use pixel_house(0.12, 0.62, "#9c5945")
     use pixel_house(0.69, 0.64, "#b18454")
 
-    # Табличка с названием локации.
+    # Название локации
     frame:
         xpos 0.02
         ypos 0.02
@@ -116,7 +92,7 @@ screen riven_village():
 
         text "РИВЕН" color "#f4d58d" size 26
 
-    # Короткое сообщение о текущем месте.
+    # Текущее место
     frame:
         xalign 0.5
         ypos 0.02
@@ -125,7 +101,7 @@ screen riven_village():
 
         text "[village_message]" color "#ffffff" size 18
 
-    # Нажатие на карту перемещает персонажа.
+    # Обработка нажатия
     button:
         xpos 0
         ypos 0.15
@@ -134,7 +110,7 @@ screen riven_village():
         background None
         action Function(move_hero_to_mouse)
 
-    # Герой — временный пиксельный силуэт.
+    # Герой
     fixed:
         xpos hero_x
         ypos hero_y
@@ -143,26 +119,15 @@ screen riven_village():
         xsize 44
         ysize 64
 
-        # Тень.
         add Solid("#263a2a") xpos 5 ypos 51 xsize 34 ysize 8
-
-        # Ноги.
         add Solid("#35364a") xpos 9 ypos 38 xsize 10 ysize 18
         add Solid("#35364a") xpos 25 ypos 38 xsize 10 ysize 18
-
-        # Тело.
         add Solid("#3f6594") xpos 7 ypos 22 xsize 30 ysize 22
-
-        # Голова.
         add Solid("#e4b58c") xpos 12 ypos 5 xsize 20 ysize 19
-
-        # Волосы.
         add Solid("#49352e") xpos 10 ypos 2 xsize 24 ysize 8
-
-        # Пояс.
         add Solid("#d0a45b") xpos 7 ypos 35 xsize 30 ysize 4
 
-    # Кнопка выхода.
+    # Выход
     textbutton "Выйти":
         xalign 0.97
         yalign 0.96
@@ -170,7 +135,6 @@ screen riven_village():
         action Return()
 
 
-# Запуск карты для проверки.
 label test_village_map:
 
     call screen riven_village
