@@ -1,5 +1,6 @@
 {
   "package": "com.firerlol.eldoria",
   "name": "Эльдория",
+  "icon_name": "Эльдория",
   "update_keystores": true
 }
